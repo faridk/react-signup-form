@@ -8,9 +8,11 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Signup from './Signup';
 
 const useStyles = makeStyles(theme => ({
 	root: {
+		paddingTop: '1%',
 		padding: '5%',
 	},
 	mainContainer: {
@@ -28,12 +30,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function ClassList() {
 	const classes = useStyles();
-	const classHeadings = ['Hiking', 'Stretch Rope', 'Yoga', 'Jump Rope', 'Cycling', 'Gym']
+	const [chosenClass, setChosenClass] = React.useState('');
+	const classHeadings = ['Hiking', 'Stretch Rope', 'Yoga', 'Jump Rope', 'Cycling', 'Gym'];
+
+	const chooseClass = (e) => {
+		console.log(e.target.title);
+		setChosenClass(e.target.title)
+	}
 
 	return (
 		<div className={classes.root}>
+			{ chosenClass ? <Signup name={chosenClass}/> : <div /> }
 			<Typography className={classes.title} variant="h1" component="h2" gutterBottom>
-				Class SignUp
+				Class Signup
 			</Typography>	
 			<Grid className={classes.mainContainer} container spacing={2}>
 				<Grid item xs={6}>
@@ -45,7 +54,8 @@ export default function ClassList() {
 									<CardMedia
 										className={classes.media}
 										image={`/img/${value+1}.jpg`}
-										title="Contemplative Reptile"
+										title={classHeadings[value % classHeadings.length]}
+										onClick={chooseClass}
 									/>
 									<CardContent>
 										<Typography gutterBottom variant="h5" component="h2">
@@ -75,7 +85,8 @@ export default function ClassList() {
 								<CardMedia
 									className={classes.media}
 									image={`/img/${value+4}.jpg`}
-									title="Contemplative Reptile"
+									title={classHeadings[value+3 % classHeadings.length]}
+									onClick={chooseClass}
 								/>
 								<CardContent>
 									<Typography gutterBottom variant="h5" component="h2">
